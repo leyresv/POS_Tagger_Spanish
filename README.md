@@ -28,7 +28,10 @@ $$ P(o_i |s_i) =  \frac {Count(s_i | o_i) + \alpha}{Count(s_i) + \alpha * N_{obs
 
 *   $N_{observations}$: total number of unique words in the vocabulary
 
+![hmm](hmm.png)
 
 ### Viterbi algorithm
 
 The Viterbi optimization is a dynamic programming algorithm that computes the most likely path in a Hidden Markov Model that results in a given sequence of observable events.
+
+![viterbi](viterbi.png)
