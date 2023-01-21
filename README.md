@@ -45,7 +45,7 @@ The Viterbi optimization is a dynamic programming algorithm that computes the mo
 
 Since the first word of the sequence will always be a BOS token, the column 0 of the C matrix initiallized to all zeros except for the row corresponding to the BOS state, that is assigned a probability of 1. The rest of the columns are computed using the following formula: 
 
-$$ C[s_i, j] = \max_{k} {C[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] | s_i) }  = \max_{k} {C[s_k, j-1] \times TransitionMatrix[s_k, s_i] \times  B[s_i, vocab[word_j]] }$$
+$$ C[s_i, j] = \max_{k} {C[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] | s_i) }  = \max_{k} {C[s_k, j-1] \times A[s_k, s_i] \times  B[s_i, vocab[word_j]] }$$
 
 *   $s_i$: $i^{th}$ state (POS tag)
 *   $s_k$: index of the best previous state (previous POS tag)
@@ -56,7 +56,7 @@ The matrix D is initiallized to all zeros except for the row corresponding to th
 
 $$ D[s_i, j] = \arg\max_{k} {D[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] | s_i) } $$
 
-$$ = \max_{k} {D[s_k, j-1] \times TransitionMatrix[s_k, s_i] \times  EmissionMatrix[s_i, vocab[word_j]] }$$
+$$ = \max_{k} {D[s_k, j-1] \times A[s_k, s_i] \times  B[s_i, vocab[word_j]] }$$
 
 
 #### Backward pass
