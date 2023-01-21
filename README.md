@@ -30,6 +30,7 @@ $$ B = P(o_j |s_i) =  \frac {Count(s_i | o_j) + \alpha}{Count(s_i) + \alpha \tim
 *   $N_{observations}$: total number of unique words in the vocabulary
 
 
+![hmm](HMM.png)
 
 ### Viterbi algorithm
 
