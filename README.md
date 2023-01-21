@@ -53,7 +53,8 @@ $$ C[s_i, j] = \max_{k} {C[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] 
 
 The matrix D is initiallized to all zeros except for the row corresponding to the BOS state, where we assign a EOS state index. The rest of columns are computed with the following formula:
 
-$$ D[s_i, j] = \arg\max_{k} {D[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] | s_i) }  = \max_{k} {D[s_k, j-1] \times TransitionMatrix[s_k, s_i] \times  EmissionMatrix[s_i, vocab[word_j]] }$$
+$$ D[s_i, j] = \arg\max_{k} {D[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] | s_i) } $$
+$$ = \max_{k} {D[s_k, j-1] \times TransitionMatrix[s_k, s_i] \times  EmissionMatrix[s_i, vocab[word_j]] }$$
 
 
 #### Backward pass
