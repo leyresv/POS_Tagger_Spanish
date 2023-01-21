@@ -62,7 +62,7 @@ The backward pass predicts the most likely sequence of hidden states (POS tags) 
 *   Get the best last state (POS tag): the state with the maximum value from the last column of matrix D
 *   Get the previous states by looping backwards through the E matrix: each cell indicates the previous state.
 
-![backtrace](backtrace.png)
+![backtrack](backtrack.png)
 
 References: 
 
