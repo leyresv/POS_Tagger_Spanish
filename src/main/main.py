@@ -1,27 +1,46 @@
 import os
 import pickle
+from spacy.lang.es import Spanish
 
 cur_file_path = os.path.dirname(os.path.realpath(__file__))
 data_path = os.path.join(cur_file_path, "../data")
 
+class POS_Tagger:
+
+    def __init__(self):
+        self.nlp = Spanish()
+        self.nlp.add_pipe("sentencizer")
+        self.pos_tagger = pickle.load(open(os.path.join(cur_file_path, "../../models/hmm_model.pkl"), "rb"))
+
+    def preprocess_input(self, text):
+        print(type(text))
+        doc = self.nlp(text)
+        words = []
+        for sentence in doc.sents:
+            words.append("<BOS>")
+            for token in sentence:
+                word = token.text
+                if word not in self.pos_tagger.get_vocab():
+                    word = "<UNK>"
+                words.append(word)
+            words.append("<EOS>")
+        return words
+
+    def tag(self, words):
+        tags = self.pos_tagger.predict(words)
+        return tags
+
 
 if __name__ == "__main__":
-    pos_tagger = pickle.load(open(os.path.join(cur_file_path, "../../models/hmm_model.pkl"), "rb"))
+    pos_tagger = POS_Tagger()
     print("Welcome to this POS tagger for Spanish.")
-    sentence = input("Please, insert your sentence in Spanish: ")
-    vocab_index = pos_tagger.get_vocab()
-    words = ["<BOS>"]
-    for word in sentence.split():
-        if word in vocab_index:
-            words.append(word)
-        else:
-            words.append("<UNK>")
-    words.append("<EOS>")
-    print(words)
-
-    tags = pos_tagger.predict(words)
+    text = input("Please, insert your sentence in Spanish: ")
+    print(type(text), print(text))
+    words = pos_tagger.preprocess_input(text)
+    tags = pos_tagger.tag(words)
 
     print("{: >20} {: >20}".format("Word",  "Tag"))
-    for word, tag in zip(words[1:-1], tags[1:-1]):
-        print("{: >20} {: >20}".format(word, tag))
-       # print(word, "\t", tag)
+    for word, tag in zip(words, tags):
+        if word not in ["<BOS>", "<EOS>"]:
+            print("{: >20} {: >20}".format(word, tag))
+
