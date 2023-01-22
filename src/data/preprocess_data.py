@@ -52,10 +52,9 @@ def preprocess_dataset(dataset, vocab, pos_tags):
     for sentence in dataset:
         word_tag.append(("<BOS>", "<BOS>"))
         for word, tag in (zip(sentence["tokens"], sentence["upos_tags"])):
-            if not word in vocab:
+            if word not in vocab:
                 word = "<UNK>"
             word_tag.append((word, pos_tags[tag]))
-        #word_tag.append(("<BOS>", "<BOS>"))
         word_tag.append(("<EOS>", "<EOS>"))
 
     return word_tag
