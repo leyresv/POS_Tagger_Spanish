@@ -12,12 +12,15 @@ def load_test_data():
     return words, gold_tags
 
 
-def evaluate_accuracy(pred_y, gold_y):
+def evaluate_accuracy(words, pred_y, gold_y):
     correct = 0
-    for pred, gold in zip(pred_y, gold_y):
-        if pred == gold:
-            correct += 1
-    return correct / len(pred_y)
+    total = 0
+    for word, pred, gold in zip(words, pred_y, gold_y):
+        if word not in ["<BOS>", "<EOS>"]:
+            total += 1
+            if pred == gold:
+                correct += 1
+    return correct / total
 
 
 if __name__ == "__main__":
@@ -29,11 +32,11 @@ if __name__ == "__main__":
     # Naive prediction
     naive_pred_tags = hmm.naive_predict(words)
     # Evaluate accuracy of naive predictions
-    naive_acc = evaluate_accuracy(naive_pred_tags, gold_tags)
+    naive_acc = evaluate_accuracy(words, naive_pred_tags, gold_tags)
     print("Naive accuracy:", naive_acc)
 
     # Viterbi optimized prediction
     viterbi_pred_tags = hmm.predict(words)
     # Evaluate accuracy of optimized predictions
-    viterbi_acc = evaluate_accuracy(viterbi_pred_tags, gold_tags)
+    viterbi_acc = evaluate_accuracy(words, viterbi_pred_tags, gold_tags)
     print("Viterbi accuracy:", viterbi_acc)
