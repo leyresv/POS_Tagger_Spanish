@@ -1,12 +1,7 @@
-import pickle
 import os
-import json
 import numpy as np
 from collections import defaultdict
-from datasets import load_dataset
-
-from src.data.preprocess_data import create_vocab, preprocess_dataset
-from src.model.viterbi_optimization import viterbi_initialize, viterbi_forward, viterbi_backward
+from src.model.viterbi_optimization import viterbi_forward, viterbi_backward
 
 cur_file_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -131,21 +126,14 @@ class HMM:
         :param words: list of words
         :return: list of predicted tags
         """
-        # Initialize Viterbi algorithm
-        self.best_tagseq_probabilities, self.best_paths = viterbi_initialize(self.pos_tags,
-                                                                             self.tag_counts,
-                                                                             self.transition_matrix,
-                                                                             self.emission_matrix,
-                                                                             self.vocab_index,
-                                                                             words)
 
         # Forward pass
-        viterbi_forward(self.transition_matrix,
-                        self.emission_matrix,
-                        self.best_tagseq_probabilities,
-                        self.best_paths,
-                        self.vocab_index,
-                        words)
+        self.best_tagseq_probabilities, self.best_paths = viterbi_forward(self.pos_tags,
+                                                                          self.tag_counts,
+                                                                          self.transition_matrix,
+                                                                          self.emission_matrix,
+                                                                          self.vocab_index,
+                                                                          words)
 
         # Backward pass
         predicted_tags = viterbi_backward(self.best_tagseq_probabilities, self.best_paths, sorted(self.pos_tags), words)
