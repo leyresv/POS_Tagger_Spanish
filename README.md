@@ -57,6 +57,10 @@ The matrix D is initiallized to all zeros except for the row corresponding to th
 $$ D[s_i, j] = \arg\max_{k} {D[s_k, j-1] \times P(s_i | s_k) \times P(vocab[word_j] | s_i) } $$
 
 $$ = \max_{k} {D[s_k, j-1] \times A[s_k, s_i] \times  B[s_i, vocab[word_j]] }$$
+ 
+ To avoid computational problems, we will actually operate with the logaritmic version of these matrices.
+
+![forward](forward.png)
 
 
 #### Backward pass
@@ -65,7 +69,7 @@ The backward pass predicts the most likely sequence of hidden states (POS tags) 
 *   Get the best last state (POS tag): the state with the maximum value from the last column of matrix D
 *   Get the previous states by looping backwards through the E matrix: each cell indicates the previous state.
 
-![backtrack](backtrack.png)
+![backward](backward.png)
 
 References: 
 
