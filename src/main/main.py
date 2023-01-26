@@ -13,7 +13,6 @@ class POS_Tagger:
         self.pos_tagger = pickle.load(open(os.path.join(cur_file_path, "../../models/hmm_model.pkl"), "rb"))
 
     def preprocess_input(self, text):
-        print(type(text))
         doc = self.nlp(text)
         words = []
         for sentence in doc.sents:
@@ -32,15 +31,18 @@ class POS_Tagger:
 
 
 if __name__ == "__main__":
-    pos_tagger = POS_Tagger()
     print("Welcome to this POS tagger for Spanish.")
-    text = input("Please, insert your sentence in Spanish: ")
-    print(type(text), print(text))
-    words = pos_tagger.preprocess_input(text)
-    tags = pos_tagger.tag(words)
+    pos_tagger = POS_Tagger()
+    text = input("Please, insert your sentence in Spanish ('Q' to quit): ")
+    while text != "Q":
+        words = pos_tagger.preprocess_input(text)
+        tags = pos_tagger.tag(words)
 
-    print("{: >20} {: >20}".format("Word",  "Tag"))
-    for word, tag in zip(words, tags):
-        if word not in ["<BOS>", "<EOS>"]:
-            print("{: >20} {: >20}".format(word, tag))
+        print("{: >20} {: >20}".format("Word",  "Tag"))
+        for word, tag in zip(words, tags):
+            if word not in ["<BOS>", "<EOS>"]:
+                print("{: >20} {: >20}".format(word, tag))
+
+        print()
+        text = input("Please, insert your sentence in Spanish ('Q' to quit): ")
 
