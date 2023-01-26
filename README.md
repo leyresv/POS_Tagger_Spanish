@@ -2,6 +2,20 @@
 
 In this project I have implemented a Part-of-Speech Tagger for Spanish. It relies on a Hidden Markov Model optimized at prediction-time with the Viterbi algorithm.
 
+## Installation
+
+```bash
+pip install git+https://github.com/leyresv/POS_Tagger_Spanish.git
+pip install -r requirements.txt
+```
+
+## Usage
+
+To use the POS Tagger on your own data, open a terminal prompt on the root directory and introduce the following command:
+```bash
+python src/main/main.py
+```
+
 ## Models
 
 ### Hidden Markov Model (HMM):
@@ -71,7 +85,7 @@ The backward pass predicts the most likely sequence of hidden states (POS tags) 
 
 ![backward](backward.png)
 
-References: 
+## References: 
 
 https://www.coursera.org/learn/probabilistic-models-in-nlp?specialization=natural-language-processing
 
