@@ -1,9 +1,11 @@
 import os
+import sys
 import pickle
 from spacy.lang.es import Spanish
 
 cur_file_path = os.path.dirname(os.path.realpath(__file__))
 data_path = os.path.join(cur_file_path, "../data")
+sys.path.append(os.path.join(cur_file_path, '../..'))
 
 class POS_Tagger:
 
